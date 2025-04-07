@@ -15,7 +15,7 @@ public class Main1 {
 
 
 
-        return actions.items.stream().filter(action -> action.personsCount == 0).count();
+        return actions.items.stream().filter(action -> action.personsCount == 0).count(); // postupne prohledavam
         // TODO 1.1: Vrať počet akcí, které mají 0 přihlášených studentů
     }
 }
