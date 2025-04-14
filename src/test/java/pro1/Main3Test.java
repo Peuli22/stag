@@ -9,7 +9,7 @@ public class Main3Test
     {
         // TODO 3.3: Oprav test
         assertEquals(
-                "vojta@uhk.cz",
+                "jiri.haviger@uhk.cz",
                 Main3.emailOfBestTeacher("KIKM",2024)
         );
     }
