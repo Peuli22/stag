@@ -18,36 +18,34 @@ public class Main7 {
     }
 
     public static String specializationDeadlines(int year) {
-        // Získání JSON dat
+
         String json = Api.getSpecializations(year);
         if (json == null || json.isEmpty()) {
             System.out.println("Api.getSpecializations vrátil null nebo prázdný řetězec.");
             return "";
         }
 
-        // Deserializace JSONu
         SpecializaceList specializaceList = new Gson().fromJson(json, SpecializaceList.class);
         if (specializaceList == null || specializaceList.prijimaciObor == null) {
             System.out.println("Deserializace JSONu selhala nebo neobsahuje žádná data.");
             return "";
         }
 
-        // Zpracování, odstranění duplicit a správné seřazení datumů
         return specializaceList.prijimaciObor.stream()
-                .map(s -> s.eprDeadlinePrihlaska.value) // Extrakce hodnot datumů
+                .map(s -> s.eprDeadlinePrihlaska.value) // vezmu si datumy
                 .distinct() // abych nemel 150x stejné datumy
-                .sorted((d1, d2) -> { // Porovnání datumů
-                    String[] parts1 = d1.split("\\.");
+                .sorted((d1, d2) -> { // Porovnám
+                    String[] parts1 = d1.split("\\."); // rozdělím datum na dny, měsíce a roky
                     String[] parts2 = d2.split("\\.");
-                    int porovnaniRoku = Integer.parseInt(parts1[2]) - Integer.parseInt(parts2[2]); // Porovnání roků
+                    int porovnaniRoku = Integer.parseInt(parts1[2]) - Integer.parseInt(parts2[2]);
                     if (porovnaniRoku != 0) {
                         return porovnaniRoku;
                     }
-                    int porovnaniMesicu = Integer.parseInt(parts1[1]) - Integer.parseInt(parts2[1]); // Porovnání měsíců
+                    int porovnaniMesicu = Integer.parseInt(parts1[1]) - Integer.parseInt(parts2[1]);
                     if (porovnaniMesicu != 0) {
                         return porovnaniMesicu;
                     }
-                    return Integer.parseInt(parts1[0]) - Integer.parseInt(parts2[0]); // Porovnání dnů
+                    return Integer.parseInt(parts1[0]) - Integer.parseInt(parts2[0]);
                 })
                 .collect(Collectors.joining(",")); // Spojení dohromady
     }
