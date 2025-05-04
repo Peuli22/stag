@@ -8,7 +8,7 @@ public class Main1Test
     {
         // TODO 1.2: Oprav test
         assertEquals(
-                62,
+                95,
                 Main1.emptyActionsCount("KIKM",2024)
         );
     }
